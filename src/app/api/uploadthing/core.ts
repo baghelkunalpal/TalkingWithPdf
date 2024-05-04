@@ -69,13 +69,16 @@ const onUploadComplete = async ({
 
     // pdf page length
     const pageAmt = pageLevelDocs.length;
+    console.log(pageAmt);
     const { subscriptionPlan, userId } = metadata;
     const { isSubscribed } = subscriptionPlan;
 
-    const isProExceeded =
-      pageAmt > PLANS.find((plan) => plan.name === "Pro")!.pagesPerPdf;
-    const isFreeExceeded =
-      pageAmt > PLANS.find((plan) => plan.name === "Free")!.pagesPerPdf;
+    const isProExceeded = pageAmt > PLANS.find((plan) => plan.name === "Pro")!.pagesPerPdf;
+      
+    console.log(isProExceeded);
+    const isFreeExceeded =  pageAmt > PLANS.find((plan) => plan.name === "Free")!.pagesPerPdf;
+     
+    console.log(isFreeExceeded);
 
     // limit exceeded
     if ((isSubscribed && isProExceeded) || (!isSubscribed && isFreeExceeded)) {
@@ -92,7 +95,7 @@ const onUploadComplete = async ({
 
     // vectorize and index entire document
     const pinecone = getPineconeClient();
-    const pineconeIndex = pinecone.Index("quill");
+    const pineconeIndex = pinecone.Index("talk-with-paf");
 
     const embeddings = new OpenAIEmbeddings({
       openAIApiKey: process.env.OPENAI_API_KEY!,
@@ -102,6 +105,7 @@ const onUploadComplete = async ({
       pineconeIndex,
       namespace: createdFile.id,
     });
+    // console.log(pineconeIndex)
 
     await db.file.update({
       data: {
