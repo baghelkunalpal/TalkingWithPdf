@@ -83,9 +83,9 @@ export const Navbar = async () => {
               )}
             </div>
 
-            <Link href={SOURCE_CODE} target="_blank" rel="noreferrer noopener">
+            {/* <Link href={SOURCE_CODE} target="_blank" rel="noreferrer noopener">
               <Image src="/github.svg" alt="GitHub" height={25} width={25} />
-            </Link>
+            </Link> */}
           </div>
         </div>
       </MaxWidthWrapper>
